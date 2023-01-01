@@ -1,16 +1,16 @@
+import { Card } from '@mui/material';
+import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useTasks, useTasksDispatch } from './TasksContext.js';
 
 export default function TaskList() {
   const tasks = useTasks();
+  const items = tasks.map((task) => <Task task={task} key={task.id} />);
+
   return (
-    <ul>
-      {tasks.map(task => (
-        <li key={task.id}>
-          <Task task={task} />
-        </li>
-      ))}
-    </ul>
+    <Card variant="outlined" sx={{ padding: '2rem' }}>
+      {items}
+    </Card>
   );
 }
 
@@ -23,54 +23,56 @@ function Task({ task }) {
       <>
         <input
           value={task.text}
-          onChange={e => {
+          onChange={(e) => {
             dispatch({
               type: 'changed',
               task: {
                 ...task,
-                text: e.target.value
-              }
+                text: e.target.value,
+              },
             });
-          }} />
-        <button onClick={() => setIsEditing(false)}>
-          Save
-        </button>
+          }}
+        />
       </>
     );
   } else {
-    taskContent = (
-      <>
-        {task.text}
-        <button onClick={() => setIsEditing(true)}>
-          Edit
-        </button>
-      </>
-    );
+    taskContent = <>{task.text}</>;
   }
   return (
-    <label>
-      <input
-        type="checkbox"
-        checked={task.done}
-        onChange={e => {
-          dispatch({
-            type: 'changed',
-            task: {
-              ...task,
-              done: e.target.checked
-            }
-          });
-        }}
-      />
-      {taskContent}
-      <button onClick={() => {
-        dispatch({
-          type: 'deleted',
-          id: task.id
-        });
-      }}>
-        Delete
-      </button>
-    </label>
+    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Box>
+        <input
+          type="checkbox"
+          checked={task.done}
+          onChange={(e) => {
+            dispatch({
+              type: 'changed',
+              task: {
+                ...task,
+                done: e.target.checked,
+              },
+            });
+          }}
+        />
+        {taskContent}
+      </Box>
+      <Box>
+        {isEditing ? (
+          <button onClick={() => setIsEditing(false)}>Save</button>
+        ) : (
+          <button onClick={() => setIsEditing(true)}>Edit</button>
+        )}
+        <button
+          onClick={() => {
+            dispatch({
+              type: 'deleted',
+              id: task.id,
+            });
+          }}
+        >
+          Delete
+        </button>
+      </Box>
+    </Box>
   );
 }
