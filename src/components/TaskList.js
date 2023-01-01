@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { Box } from '@mui/system';
 import { useState } from 'react';
-import { useTasks, useTasksDispatch } from './TasksContext.js';
+import { useTasks, useTasksDispatch } from '../contexts/TasksContext.js';
 
 export default function TaskList() {
   const tasks = useTasks();

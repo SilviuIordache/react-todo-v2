@@ -1,6 +1,6 @@
 import { Box, Button, Card, TextField } from '@mui/material';
 import { useState } from 'react';
-import { useTasksDispatch } from './TasksContext.js';
+import { useTasksDispatch } from '../contexts/TasksContext.js';
 import AddIcon from '@mui/icons-material/Add';
 
 export default function AddTask() {
