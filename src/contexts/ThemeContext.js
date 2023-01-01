@@ -1,23 +1,27 @@
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { createContext, useContext, useMemo, useReducer } from 'react';
+import { createContext, useContext, useReducer } from 'react';
 
 const ThemeDispatchContext = createContext(null);
+
+const lightTheme = createTheme({
+  palette: {
+    mode: 'light',
+  },
+});
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 export function CustomThemeProvider({ children }) {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
   const [theme, dispatch] = useReducer(
     themeReducer,
-    useMemo(
-      () =>
-        createTheme({
-          palette: {
-            mode: prefersDarkMode ? 'dark' : 'light',
-          },
-        }),
-      [prefersDarkMode]
-    )
+    prefersDarkMode ? darkTheme : lightTheme
   );
 
   return (
@@ -34,13 +38,7 @@ export function useThemeDispatch() {
 function themeReducer(theme, action) {
   switch (action.type) {
     case 'toggle': {
-      console.log(theme.palette.mode)
-      theme = createTheme({
-        palette: {
-          mode: theme.palette.mode === 'light' ? 'dark' : 'light',
-        },
-      });
-      return theme;
+      return theme.palette.mode === 'light' ? darkTheme : lightTheme;
     }
     default: {
       throw Error('Unknown action: ' + action.type);
