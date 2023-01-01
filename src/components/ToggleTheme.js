@@ -20,9 +20,9 @@ export default function ToggleTheme() {
       <h3>Theme switch</h3>
 
       <Box sx={{ alignItems: 'center', display: 'flex' }}>
-        <LightModeIcon />
-        <Switch {...localTheme} onChange={toggleTheme} />
         <DarkModeIcon />
+        <Switch {...localTheme} onChange={toggleTheme} />
+        <LightModeIcon />
       </Box>
     </Card>
   );

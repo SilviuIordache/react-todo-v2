@@ -34,9 +34,10 @@ export function useThemeDispatch() {
 function themeReducer(theme, action) {
   switch (action.type) {
     case 'toggle': {
+      console.log(theme.palette.mode)
       theme = createTheme({
         palette: {
-          mode: 'light',
+          mode: theme.palette.mode === 'light' ? 'dark' : 'light',
         },
       });
       return theme;
