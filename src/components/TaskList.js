@@ -1,4 +1,8 @@
-import { Card } from '@mui/material';
+import { IconButton, Card, Checkbox } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import SaveIcon from '@mui/icons-material/Save';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useTasks, useTasksDispatch } from './TasksContext.js';
@@ -9,6 +13,7 @@ export default function TaskList() {
 
   return (
     <Card variant="outlined" sx={{ padding: '2rem' }}>
+      <h3>Task List</h3>
       {items}
     </Card>
   );
@@ -40,10 +45,9 @@ function Task({ task }) {
   }
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-      <Box>
-        <input
-          type="checkbox"
-          checked={task.done}
+      <Box sx={{ alignItems: 'center', display: 'flex' }}>
+        <Checkbox
+          {...task.done}
           onChange={(e) => {
             dispatch({
               type: 'changed',
@@ -54,15 +58,20 @@ function Task({ task }) {
             });
           }}
         />
-        {taskContent}
+        <div>{taskContent}</div>
       </Box>
       <Box>
         {isEditing ? (
-          <button onClick={() => setIsEditing(false)}>Save</button>
+          <IconButton variant="contained" onClick={() => setIsEditing(false)}>
+            <SaveIcon />
+          </IconButton>
         ) : (
-          <button onClick={() => setIsEditing(true)}>Edit</button>
+          <IconButton variant="contained" onClick={() => setIsEditing(true)}>
+            <EditIcon />
+          </IconButton>
         )}
-        <button
+        <IconButton
+          variant="contained"
           onClick={() => {
             dispatch({
               type: 'deleted',
@@ -70,8 +79,8 @@ function Task({ task }) {
             });
           }}
         >
-          Delete
-        </button>
+          <DeleteIcon />
+        </IconButton>
       </Box>
     </Box>
   );
