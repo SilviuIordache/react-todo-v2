@@ -4,7 +4,7 @@ const TasksContext = createContext(null);
 
 const TasksDispatchContext = createContext(null);
 
-export function TasksProvider({ children }) {
+export default function TasksProvider({ children }) {
   const [tasks, dispatch] = useReducer(
     tasksReducer,
     initialTasks

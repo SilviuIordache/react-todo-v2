@@ -16,7 +16,7 @@ const darkTheme = createTheme({
   },
 });
 
-export function CustomThemeProvider({ children }) {
+export default function CustomThemeProvider({ children }) {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
   const [theme, dispatch] = useReducer(
