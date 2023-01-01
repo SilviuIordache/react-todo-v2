@@ -2,15 +2,18 @@ import { Card, Switch } from '@mui/material';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { Box } from '@mui/system';
-
+import { useThemeDispatch } from '../contexts/ThemeContext';
 
 export default function ToggleTheme() {
-  // const theme = useTheme();
-  // const dispatch = useThemeDispatch();
-
-  // console.log(theme)
-
-  const localTheme = false
+  
+  const localTheme = false;
+  const dispatch = useThemeDispatch();
+  
+  function toggleTheme() {
+    dispatch({
+      type: 'toggle'
+    })
+  }
 
   return (
     <Card sx={{ padding: '2rem' }}>
@@ -18,7 +21,7 @@ export default function ToggleTheme() {
 
       <Box sx={{ alignItems: 'center', display: 'flex' }}>
         <LightModeIcon />
-        <Switch {...localTheme} />
+        <Switch {...localTheme} onChange={toggleTheme} />
         <DarkModeIcon />
       </Box>
     </Card>
